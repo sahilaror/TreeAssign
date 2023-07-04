@@ -1,0 +1,276 @@
+ANS 1
+class Node {
+    int val;
+    Node left;
+    Node right;
+    Node(int val){
+        this.val=val;
+    }
+}
+public class levelOfTraversal {
+
+    public static boolean printLevel(Node root,int level){
+        if (root ==null){
+            return  false;
+        }
+        if (level==1){
+            System.out.print(root.val+" ");
+            return true;
+        }
+
+
+
+
+
+        boolean left=printLevel(root.left,level-1);
+        boolean right=printLevel(root.right,level-1);
+        return (left||right);
+    }
+    public static void main(String[] args) {
+        Node root=new Node(1);
+        root.left=new Node(2);
+        root.right=new Node(3);
+        root.left.left=new Node(4);
+        root.right.left=new Node(5);
+        root.right.right=new Node(6);
+        root.right.left.left=new Node(7);
+        root.right.left.right=new Node(8);
+        int level=1;
+      while( printLevel(root,level)){
+          level++;
+      }
+    }
+}
+
+
+ANS 2
+
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+class Node {
+    int val;
+    Node left;
+    Node right;
+    Node(int val){
+        this.val=val;
+    }
+}
+ class practise{
+     public static boolean check(Node root)
+     {
+         if (root == null) {
+             return true;
+         }
+
+         Queue<Node> queue = new ArrayDeque<>();
+         queue.add(root);
+
+         Node front;
+
+         boolean flag = false;
+         while (!queue.isEmpty())
+         {
+             front = queue.poll();
+
+             if (flag && (front.left != null || front.right != null)) {
+                 return false;
+             }
+             if (front.left == null && front.right != null) {
+                 return false;
+             }
+
+             if (front.left != null) {
+                 queue.add(front.left);
+             }
+             else {
+                 flag = true;
+             }
+             if (front.right != null) {
+                 queue.add(front.right);
+             }
+             else {
+                 flag = true;
+             }
+         }
+
+         return true;
+     }
+
+    public static void main(String[] args) {
+        Node root=new Node(1);
+        root.left=new Node(2);
+        root.right=new Node(3);
+        root.left.left=new Node(4);
+        root.left.right=new Node(5);
+        root.right.left=new Node(6);
+        if (check(root)) {
+            System.out.println("it is a complete binary tree");
+        }
+        else {
+            System.out.println("it is not a complete binary tree");
+        }
+    }
+}
+
+
+
+
+
+ANS 3
+
+class Node {
+    int val;
+    Node left;
+    Node right;
+    Node(int val){
+        this.val=val;
+    }
+}
+public class levelOfTraversal {
+
+    public static void reverseOrder(Node root) {
+    int h=height(root);
+    for(int i=h; i>=1; i--) {
+    printLevel(root,i);
+    }
+
+    }
+public static int height(Node root) {
+if (root==null) {
+    return 0;
+}
+
+   return 1+Math.max(height(root.left),height(root.right));
+
+
+}
+    public static void printLevel(Node root,int level){
+        if (root ==null){
+            return;
+        }
+        if (level==1){
+            System.out.print(root.val+" ");
+        }
+        else if(level>1) {
+           printLevel(root.left, level - 1);
+           printLevel(root.right, level - 1);
+        }
+    }
+
+    public static void main(String[] args) {
+        Node root=new Node(1);
+        root.left=new Node(2);
+        root.right=new Node(3);
+        root.left.left=new Node(4);
+        root.left.right=new Node(5);
+            reverseOrder(root);
+      }
+    }
+
+
+ANS 4
+
+	import java.util.HashMap;
+import java.util.Map;
+
+class Node {
+    int val;
+    Node left;
+    Node right;
+    Node(int val){
+        this.val=val;
+    }
+}
+ class practise{
+
+     public static void leftView(Node root, int level, Map<Integer, Integer> map)
+     {
+
+         if (root == null) {
+             return;
+         }
+
+         map.putIfAbsent(level, root.val);
+
+         leftView(root.left, level + 1, map);
+         leftView(root.right, level + 1, map);
+     }
+
+     public static void leftView(Node root)
+     {
+         Map<Integer, Integer> map = new HashMap<>();
+         leftView(root, 1, map);
+
+
+         for (int i = 1; i <= map.size(); i++) {
+             System.out.print(map.get(i) + " ");
+         }
+     }
+
+    public static void main(String[] args) {
+        Node root=new Node(1);
+        root.left=new Node(2);
+        root.right=new Node(3);
+        root.left.left=new Node(4);
+        root.left.right=new Node(5);
+        root.right.left=new Node(6);
+        root.right.right=new Node(7);
+        leftView(root);
+    }
+}
+
+
+
+ANS 5
+
+
+class Node {
+    int val;
+    Node left;
+    Node right;
+    Node(int val){
+        this.val=val;
+    }
+}
+ class practise{
+     public static void preorder(Node root)
+     {
+         if (root == null) {
+             return;
+         }
+
+         System.out.print(root.val + " ");
+         preorder(root.left);
+         preorder(root.right);
+     }
+    public static void swap(Node root){
+        if (root==null)  return;
+
+        Node temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+    }
+
+ public static void MirrorPrint(Node root){
+         if (root==null)  return;
+         MirrorPrint(root.left);
+         MirrorPrint(root.right);
+         swap(root);
+        }
+
+    public static void main(String[] args) {
+        Node root=new Node(1);
+        root.left=new Node(2);
+        root.right=new Node(3);
+        root.left.left=new Node(4);
+        root.left.right=new Node(5);
+        root.right.left=new Node(6);
+        root.right.right=new Node(7);
+       MirrorPrint(root);
+       preorder(root);
+    }
+}
+
+
+
